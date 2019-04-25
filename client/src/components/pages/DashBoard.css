@@ -1,18 +1,25 @@
 .App {
+    margin-left:-18%;
+    margin-right:-18%;
     text-align: center;
     background-color:white;
-    min-height: 100vh;
     display: flex;
+    padding-top:10%; 
     flex-direction: column;
     align-items: center;
     justify-content: center;
     font-size: calc(10px + 2vmin);
   }
+  .main {
+    margin-left:-18%;
+    margin-right:-18%;
+    height: 100%;
+  }
   
   .Card {
     background-color: white;
-    padding: 32px;
-    width: 50%;
+    padding: 20px;
+    width: 35%;
     display: flex;
     align-items: flex-start;
     justify-content: flex-start;

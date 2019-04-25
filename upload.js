@@ -11,7 +11,7 @@ module.exports = function upload(req, res) {
     let contents = fs.readFileSync(file.path, "utf8");
     let inpHash = sha(contents);
     form.parse(req);
-    console.log(inpHash+"sssssssssssssssssssssssssssssssssssssssssss")
+    console.log(inpHash)
   res.status(202).send({
     'hash':inpHash})
   });

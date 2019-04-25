@@ -1,8 +1,11 @@
 import React from 'react';
 import { Redirect } from 'react-router';
-import "./DashBoard.css";
-import Upload from "../upload/Upload";
-class DashBoard extends React.Component {
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
+class User extends React.Component {
   constructor(props)
   {
       super(props);
@@ -21,21 +24,16 @@ logout()
 }
   
     render(){
-        if (this.state.loading === true) {
-            return <Redirect to='/login' />
-          }
+       
         return(
             <div className="App">
-                <div className="Card">
-                     <Upload />
-                 </div>
-      
+                hiiiiiiiiiii
             </div>
             
         )
     }
 }
-export default DashBoard;
+export default User;
   
       
     

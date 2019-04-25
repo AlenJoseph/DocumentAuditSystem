@@ -1,8 +1,26 @@
 import React from 'react';
 import { Redirect } from 'react-router';
+import Upload from "../upload/aUpload";
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+
+const styles = {
+    root: {
+      flexGrow: 1,
+    },
+    grow: {
+      flexGrow: 1,
+    },
+    menuButton: {
+      marginLeft: -12,
+      marginRight: 20,
+    },
+  };
 class AdminDashBoard extends React.Component {
   constructor(props)
-  {
+  { 
       super(props);
       this.logout=this.logout.bind(this);
      
@@ -22,10 +40,27 @@ logout()
         if (this.state.loading === true) {
             return <Redirect to='/adminlogin' />
           }
+        
         return(
-            <div>
-            <h1>Hellooooooo</h1>
-            <button onClick={this.logout}>Logout</button></div>
+         
+            <div className="main"> 
+                <AppBar position="static">
+                 <Toolbar >
+                         <Typography variant="h6" color="inherit" style={{flexGrow: 1}}>
+                              Admin Dashboard
+                        </Typography>
+                <Button onClick={()=>this.props.history.push('/User')}color="inherit">View Users</Button>
+                <Button onClick={this.logout}color="inherit">Log Out</Button>
+                </Toolbar>
+      </AppBar>
+            <div className="App">
+        
+            <div className="Card">
+                 <Upload />
+             </div>
+  
+        </div>
+        </div>
         )
     }
 }

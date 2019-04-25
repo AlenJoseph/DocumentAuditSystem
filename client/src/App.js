@@ -6,6 +6,7 @@ import SignupPage from './components/pages/SignupPage';
 import DashBoardPage from './components/pages/DashBoard';
 import AdminDashBoardPage from './components/pages/AdminDashBoard';
 import AdminLoginPage from  './components/pages/AdminLoginPage';
+import User from  './components/pages/User';
 const App = () => (
 <div className="ui container">
   <Route path="/" exact component={HomePage}/>
@@ -14,6 +15,7 @@ const App = () => (
   <Route path="/DashBoard" exact component={DashBoardPage}/>
   <Route path="/AdminDashBoard" exact component={AdminDashBoardPage}/>
   <Route path="/adminlogin" exact component={AdminLoginPage}/>
+  <Route path="/User" exact component={User}/>
 </div>
 )
 

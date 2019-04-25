@@ -71,7 +71,7 @@ button {
   font-size: 14px;
   display: inline-block;
   height: 36px;
-  min-width: 88px;
+  min-width: 70px;
   padding: 6px 16px;
   line-height: 1.42857143;
   text-align: center;
@@ -86,7 +86,7 @@ button {
   user-select: none;
   border: 0;
   border-radius: 2px;
-  background: rgba(103, 58, 183, 1);
+  background: rgb(63, 81, 181);
   color: #fff;
   outline: 0;
 }
