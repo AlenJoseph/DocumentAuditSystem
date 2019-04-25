@@ -28,8 +28,7 @@ npm run client
 
 ### Author
 
-Brad Traversy
-[Traversy Media](http://www.traversymedia.com)
+Alen Joseph
 
 ### Version
 
