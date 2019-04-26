@@ -9,7 +9,7 @@ class AdminLoginPage extends React.Component {
     render(){
         return(
         <div style={{'padding-top': '15%'}} >
-          <h1 style = {{'text-align': 'center'}}>Login</h1>
+          <h1 style = {{'text-align': 'center'}}>Admin Login</h1>
         <AdminLoginForm submit={this.submit}/>
        
       </div>

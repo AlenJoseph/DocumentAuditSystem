@@ -22,30 +22,29 @@ connection.connect(err=>{
 /*.........................................................Admin Log In................................................. */
 app.use(cors());
 app.post('/admin/login', (req, res) => {
-  let username =req.body.username;
+  let username =req.body.uname;
   let password =req.body.password;
   connection.query('select * from Admin_LogIn_Tb where username=?',[username], function (error, results, fields) {
     if (error) {
-      res.send({
-        "code":400,
-        "failed":"error ocurred"
-      })
+      res.status(400).send({
+        "reply":"error occured"
+          });
     }else{
       if(results.length >0){
         if(results[0].password == password){
           res.status(200).send({
-            "replay":"login sucessfull"
+            "reply":"login sucessfull"
               });
         }
         else{
           res.status(404).send({
-            "replay":"Username and password does not match"
+            "reply":"Username and password does not match"
               });
         }
       }
       else{
         res.status(404).send({
-          "replay":"Username does not exits"
+          "reply":"Username does not exits"
             });
       }
     }
@@ -54,35 +53,36 @@ app.post('/admin/login', (req, res) => {
 /*.........................................................User Log In....................................................... */
 app.use(cors());
 app.post('/user/login', (req, res) => {
-  let username =req.body.username;
+  let username =req.body.uname;
   let password =req.body.password;
+  console.log(username+password)
   connection.query('select * from users where username=?',[username], function (error, results, fields) {
     if (error) {
-      res.send({
-        "code":400,
-        "failed":"error ocurred"
-      })
+      reres.status(400).send({
+        "reply":"error occured"
+          });
     }else{
       if(results.length >0){
         if((results[0].password == password)&&(results[0].status == 1)){
           res.status(200).send({
-            "replay":"login sucessfull"
+            "username":results[0].username,
+            "reply":"login sucessfull"
               });
         }
         else if((results[0].password == password)&&(results[0].status == 0)){
           res.status(202).send({
-            "replay":"Waiting for approvel"
+            "reply":"Waiting for approvel"
               });
         }
         else{
           res.status(404).send({
-            "replay":"Username and password does not match"
+            "reply":"Username and password does not match"
               });
         }
       }
       else{
         res.status(404).send({
-          "replay":"Username does not exits"
+          "reply":"Username does not exits"
             });
       }
     }
@@ -94,34 +94,59 @@ app.use(cors());
 app.post('/user/register', (req, res) => {
   let today = new Date();
   let users={
-   "username":req.body.username,
+   "username":req.body.uname,
    "name":req.body.name,
    "email":req.body.email,
-   "address":req.body.adddress,
-   "pincode":req.body.pincode,
    "status":0,
     "password":req.body.password,
-    "ph":req.body.ph
+    "phone":req.body.phone
   }
   connection.query('INSERT INTO users SET ?',users, function (error, results, fields) {
   if (error) {
     console.log("error ocurred",error);
-    res.send({
-      "code":400,
-      "failed":"error ocurred"
-    })
+    res.status(404).send({
+      "reply":"error occured"
+        });
   }else{
     console.log('The solution is: ', results);
-    res.send({
-      "code":200,
-      "success":"user registered sucessfully"
+    res.status(202).send({
+      "reply":"registered successfully"
         });
   }
 });
 });
+/*.........................................................File opertion....................................................... */
 app.use(cors());
 app.post("/upload", upload);
+/*.........................................................Get all unaproved User....................................................... */
+app.use(cors());
+app.get('/admin/users', (req, res) => {
+ 
+  connection.query('select * from users where status=0', function (error, results, fields) {
 
+  res.json(results);
+});
+});
+/*.........................................................Approve User................................................................ */
+app.use(cors());
+app.post('admin/user/id', (req, res) => {
+  let id =req.body.id;
+
+  console.log(username+password)
+  connection.query('update users set status=1 where users_id=?',[id], function (error, results, fields) {
+    if (error) {
+      console.log("error ocurred",error);
+      res.status(404).send({
+        "reply":"error occured"
+          });
+    }else{
+      console.log('The solution is: ', results);
+      res.status(202).send({
+        "reply":"approved"
+          });
+        }
+    });
+});
 const port = 5000;
 
 app.listen(port, () => `Server running on port ${port}`);

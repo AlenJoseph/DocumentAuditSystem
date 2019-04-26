@@ -4,6 +4,7 @@ import {Form,Button} from 'semantic-ui-react';
 import Validator from 'validator';
 import InlineError from "../../src/components/messages/InlineError";
 import { Redirect } from 'react-router';
+import swal from 'sweetalert';
 class SignupForm extends React.Component {
     state={
         data: {
@@ -28,8 +29,20 @@ onSubmit = () => {
     this.setState({ errors});
     if(Object.keys(errors).length === 0){
     this.props.submit(this.state.data);
-    this.setState({loading:true})
-   
+    fetch('http://localhost:5000/user/register',{
+        method : 'POST',
+        headers : {'Content-Type': 'application/json'},
+        body : JSON.stringify(this.state.data)
+        
+      }).then((response) => response.json())
+      .then((responseData) =>
+      {
+          console.log(responseData)
+      if(responseData.reply==='registered successfully'){
+      swal({title:'Registered Successfull',text:'The account needs to be approved, try loging after sometimes' ,icon:"success"});
+        this.setState({loading:true})
+      }
+      });
     }
 }
 validate = (data) => {
@@ -38,7 +51,7 @@ validate = (data) => {
     if(!Validator.isEmail(data.email)) errors.email = "Invalid Email";
     if(!data.password) errors.password = "Can't be blank";
     if(!Validator.equals(data.password,data.cpassword)) errors.cpassword="Those passwords didn't match. Try again.";
-    if(!Validator.isAlpha(data.name)) errors.name = "Enter a valid name";
+    if(!data.name) errors.name = "Enter a valid name Can't be blank";
     if(!Validator.isMobilePhone(data.phone)) errors.phone = "Enter a valid phone number";
     return errors;
 }

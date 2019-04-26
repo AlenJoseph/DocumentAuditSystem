@@ -13,7 +13,17 @@ class User extends React.Component {
      
   }
   state={
- loading:false
+ loading:false,
+ users:[]
+}
+componentDidMount(e)
+{
+    fetch('http://localhost:5000/admin/users',{headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json;charset=UTF-8'
+},})
+      .then(res => res.json())
+      .then(users => this.setState({users}, () => console.log('Customers fetched...', users)));
 }
 logout()
 {
@@ -26,8 +36,16 @@ logout()
     render(){
        
         return(
-            <div className="App">
-                hiiiiiiiiiii
+            <div className="main">
+              <AppBar position="static">
+                    <Toolbar >
+                            <Typography variant="h6" color="inherit" style={{flexGrow: 1,"marginLeft":"2%"}}>
+                              Admin Dashboard
+                            </Typography>
+                            <Button onClick={()=>this.props.history.push('/AdminDashBoard')}color="inherit">DashBoard</Button>
+                            <Button onClick={this.logout}color="inherit" style={{"marginRight":"2%"}}>Log Out</Button>
+                    </Toolbar>
+                </AppBar>
             </div>
             
         )

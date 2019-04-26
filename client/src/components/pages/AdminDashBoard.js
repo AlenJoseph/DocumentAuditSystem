@@ -45,21 +45,20 @@ logout()
          
             <div className="main"> 
                 <AppBar position="static">
-                 <Toolbar >
-                         <Typography variant="h6" color="inherit" style={{flexGrow: 1}}>
+                    <Toolbar >
+                            <Typography variant="h6" color="inherit" style={{flexGrow: 1,"marginLeft":"2%"}}>
                               Admin Dashboard
-                        </Typography>
-                <Button onClick={()=>this.props.history.push('/User')}color="inherit">View Users</Button>
-                <Button onClick={this.logout}color="inherit">Log Out</Button>
-                </Toolbar>
-      </AppBar>
+                            </Typography>
+                            <Button onClick={()=>this.props.history.push('/User')}color="inherit">View Users</Button>
+                            <Button onClick={this.logout}color="inherit" style={{"marginRight":"2%"}}>Log Out</Button>
+                    </Toolbar>
+                </AppBar>
             <div className="App">
-        
-            <div className="Card">
-                 <Upload />
-             </div>
+                <div className="Card">
+                     <Upload />
+                </div>
   
-        </div>
+            </div>
         </div>
         )
     }

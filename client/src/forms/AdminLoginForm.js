@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {Form,Button} from 'semantic-ui-react';
 import InlineError from "../../src/components/messages/InlineError";
 import { Redirect } from 'react-router';
-
+import swal from 'sweetalert';
 class AdminLoginForm extends React.Component {
     state={
         data: {
@@ -25,15 +25,39 @@ onSubmit = () => {
     if(Object.keys(errors).length === 0){
         this.props.submit(this.state.data);
     }
-    localStorage.setItem('uname',this.state.data.uname);
-    localStorage.setItem('password',this.state.data.password);
-    let uname=localStorage.getItem('uname');
-    let upassword=localStorage.getItem('password')
-    if((uname === 'aaa')&&(upassword=== 'aaa')){
-     this.setState({loading:true})
+    fetch('http://localhost:5000/admin/login',{
+        method : 'POST',
+        headers : {'Content-Type': 'application/json'},
+        body : JSON.stringify(this.state.data)
+        
+      }).then((response) => response.json())
+      .then((responseData) =>
+      {
+          console.log(responseData)
+          localStorage.setItem('uname',responseData.username);
+          
+          if (responseData.reply === 'login sucessfull')
+          {
+            swal({title:'Login Successfull' ,icon:"success"});
+            this.setState({loading:true})
+          }
+          else if(responseData.reply === 'Waiting for approvel'){
+            swal({title:'Account needs to be approved' ,icon:"info"});
+          }
+          else if(responseData.reply === 'Username and password does not match'){
+            swal({title:'Username and password does not match' ,icon:"error"});
+          }
+          else if(responseData.reply === 'Username does not exits'){
+            swal({title:'Username does not exits' ,icon:"error"});
+          }
+          else{
+            swal({title:'Network Error' ,icon:"error"});
+          }
+          
+      })
     
 
-    }
+    
 }
 validate = (data) => {
     const errors = {};

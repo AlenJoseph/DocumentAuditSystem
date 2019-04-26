@@ -2,7 +2,10 @@ import React, { Component } from "react";
 import Dropzone from "../dropzone/Dropzone";
 import "./Upload.css";
 import Progress from "../progress/Progress";
+import swal from 'sweetalert';
 const tick = require('./tick.svg');
+
+
 class Upload extends Component {
   constructor(props) {
     super(props);
@@ -11,8 +14,8 @@ class Upload extends Component {
       uploading: false,
       uploadProgress: {},
       successfullUploaded: false,
-      time:'',
-      blockno:'',
+      time:0,
+      blockno:0,
       a:'',
       b:'',
       c:''
@@ -94,9 +97,9 @@ class Upload extends Component {
           }
           console.log(Data)
           var user = 'admin'
-          var userAddress= '4f98e4832b30cefc21820f9d0c06aad537df198e'
+          var userAddress= '698bbccf0551db6355539ae38b1a485f68c76a5b'
           var contractName= 'ProofOfExistence'
-          var contractAddress= 'a1934ac4a5eba1928ca7bbb74734f6d890efc8bc'
+          var contractAddress= '897d91a368563c1337b24f6265cd3c7ae65d14f2'
           var ti='The time stamp is:'
          var bh='The block number is:' 
          
@@ -124,6 +127,7 @@ class Upload extends Component {
                 body : JSON.stringify(Data)
                 }).then(res=> res.json())
                 .then(json=>{
+                  console.log(json.data.contents[0])
                   this.setState({
                     time: json.data.contents[0],
                     blockno:json.data.contents[1]
@@ -141,14 +145,19 @@ class Upload extends Component {
         
         
                   console.log(this.state.time ,this.state.blockno)
+                }).then(()=>{
+                  if(this.state.time==0){
+                    swal({title:'Document not found',text:'Please validate your document',icon:"error"});
+                  }
+                  else{
+                    swal({title:"It is a Valid Document", text:" It was added on "+this.state.a+" the blocknumber is: "+this.state.blockno,icon: "success",});
+                  }
                 })
         
-             }else{
-               alert('document not found')
              }
             })
         }
-    }
+    }.bind(this)
       
     });
   }
@@ -219,6 +228,7 @@ class Upload extends Component {
           </div>
         </div>
         <div className="Actions">{this.renderActions()}</div>
+        
       </div>
     );
   }

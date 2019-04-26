@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Dropzone from "../dropzone/Dropzone";
 import "./Upload.css";
 import Progress from "../progress/Progress";
+import swal from 'sweetalert';
 const tick = require('./tick.svg');
 class aUpload extends Component {
   constructor(props) {
@@ -83,70 +84,40 @@ class aUpload extends Component {
       req.onreadystatechange = function() {
         if (req.readyState == XMLHttpRequest.DONE) {
           let jsonResponse = JSON.parse(req.responseText);
-          
-         
+          console.log(jsonResponse.hash)
           var Data = {
-                
+        
             password: 'admin',
-            method:'doesProofExist',
+            method:'notarizeHash',
             value:0,
             args:{documentHash:jsonResponse.hash}
           }
           console.log(Data)
           var user = 'admin'
-          var userAddress= '4f98e4832b30cefc21820f9d0c06aad537df198e'
+          var userAddress= '698bbccf0551db6355539ae38b1a485f68c76a5b'
           var contractName= 'ProofOfExistence'
-          var contractAddress= 'a1934ac4a5eba1928ca7bbb74734f6d890efc8bc'
-          var ti='The time stamp is:'
-         var bh='The block number is:' 
-         
-         
+          var contractAddress= '897d91a368563c1337b24f6265cd3c7ae65d14f2'
+          
+          
           fetch(`http://localhost/bloc/v2.2/users/${user}/${userAddress}/contract/${contractName}/${contractAddress}/call?resolve=true`,
           {
             method : 'POST',
             headers : {'Content-Type': 'application/json'},
             body : JSON.stringify(Data)
-            }).then(res=> res.json())
-              .then(json=>{
-             if(json.status=='Success'){
-              var Data = {
-                
-                password: 'admin',
-                method:'returnData',
-                value:0,
-                args:{documentHash:jsonResponse.hash}
-              }
-              fetch(`http://localhost/bloc/v2.2/users/${user}/${userAddress}/contract/${contractName}/${contractAddress}/call?resolve=true`,
-              {
-               
-                method : 'POST',
-                headers : {'Content-Type': 'application/json'},
-                body : JSON.stringify(Data)
-                }).then(res=> res.json())
-                .then(json=>{
-                  this.setState({
-                    time: json.data.contents[0],
-                    blockno:json.data.contents[1]
-                  })
-                  var newDate = new Date();
-                  newDate.setTime(this.state.time*1000);
-                  var dateString = newDate.toLocaleString();
-               
-                  this.setState({
-                    a:dateString,
-                    b:ti,
-                    c:bh
-                  })
-        
-        
-        
-                  console.log(this.state.time ,this.state.blockno)
-                })
-        
-             }else{
-               alert('document not found')
-             }
             })
+            .then(res=> res.json())
+            .then(json=>{
+              console.log(json)
+             if(json.status=='Failure'){
+              swal({title:'Hash already exists',text:'The document already exists in the Blockchain',icon:"error"});
+             }
+             
+             if(json.status=='Success'){
+              swal({title:'Hash is added to the blockchain',icon:"success"});
+                       
+            }
+            })
+
         }
     }
       
