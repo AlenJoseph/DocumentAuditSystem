@@ -49,7 +49,7 @@ logout()
                             <Typography variant="h6" color="inherit" style={{flexGrow: 1,"marginLeft":"2%"}}>
                               Admin Dashboard
                             </Typography>
-                            <Button onClick={()=>this.props.history.push('/User')}color="inherit">View Users</Button>
+                            <Button onClick={()=>this.props.history.push('/User')}color="inherit">User Details</Button>
                             <Button onClick={this.logout}color="inherit" style={{"marginRight":"2%"}}>Log Out</Button>
                     </Toolbar>
                 </AppBar>

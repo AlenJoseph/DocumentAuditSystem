@@ -129,10 +129,10 @@ app.get('/admin/users', (req, res) => {
 });
 /*.........................................................Approve User................................................................ */
 app.use(cors());
-app.post('admin/user/id', (req, res) => {
+app.post('/admin/user/id', (req, res) => {
   let id =req.body.id;
-
-  console.log(username+password)
+  console.log(req);
+  console.log(id);
   connection.query('update users set status=1 where users_id=?',[id], function (error, results, fields) {
     if (error) {
       console.log("error ocurred",error);
