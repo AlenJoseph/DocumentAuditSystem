@@ -1,6 +1,6 @@
-# React Express Starter Pack
+# Document Audit System
 
-> Create full stack apps with React and Express. Run your client and server with a single command. 
+> Application that can stores documents in safe and secure manner 
 
 
 ## Quick Start
