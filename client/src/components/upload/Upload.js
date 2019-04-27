@@ -97,9 +97,9 @@ class Upload extends Component {
           }
           console.log(Data)
           var user = 'admin'
-          var userAddress= '698bbccf0551db6355539ae38b1a485f68c76a5b'//change address here
+          var userAddress= '93cddaee0b3babb55dbddd923ca4048bb4a49ac2'//change address here
           var contractName= 'ProofOfExistence'
-          var contractAddress= '897d91a368563c1337b24f6265cd3c7ae65d14f2'//change address here
+          var contractAddress= '2f79fd3cbeb4a2dc2d39421db934f085d65075ac'//change address here
           var ti='The time stamp is:'
          var bh='The block number is:' 
          

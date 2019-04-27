@@ -31,7 +31,7 @@ class AdminDashBoard extends React.Component {
 logout()
 {
     console.log("hereeeee")
-    localStorage.removeItem('email');
+    localStorage.removeItem('uname');
     localStorage.removeItem('password');
     this.setState({loading:true})
 }
@@ -44,7 +44,7 @@ logout()
         return(
          
             <div className="main"> 
-                <AppBar position="static">
+                <AppBar >
                     <Toolbar >
                             <Typography variant="h6" color="inherit" style={{flexGrow: 1,"marginLeft":"2%"}}>
                               Admin Dashboard

@@ -69,7 +69,7 @@ reload(){
           }
         return(
             <div className="main">
-              <AppBar position="static">
+              <AppBar >
                     <Toolbar >
                             <Typography variant="h6" color="inherit" style={{flexGrow: 1,"marginLeft":"2%"}}>
                               User Details 

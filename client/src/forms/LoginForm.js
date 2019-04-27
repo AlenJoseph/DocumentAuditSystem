@@ -36,8 +36,9 @@ onSubmit = () => {
       {
           console.log(responseData)
           localStorage.setItem('uname',responseData.username);
+          let un=localStorage.getItem('uname',responseData.username);
           
-          if (responseData.reply === 'login sucessfull')
+          if (responseData.reply === 'login sucessfull'&&(un !=null))
           {
             swal({title:'Login Successfull' ,icon:"success"});
             this.setState({loading:true})
