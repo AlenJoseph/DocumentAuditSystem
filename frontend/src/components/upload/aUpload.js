@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import Dropzone from "../dropzone/Dropzone";
-import "./Upload.css";
-import Progress from "../progress/Progress";
+import React, { Component } from 'react';
+import Dropzone from '../dropzone/Dropzone';
+import './Upload.css';
+import Progress from '../progress/Progress';
 import swal from 'sweetalert';
 const tick = require('./tick.svg');
 class aUpload extends Component {
@@ -12,11 +12,11 @@ class aUpload extends Component {
       uploading: false,
       uploadProgress: {},
       successfullUploaded: false,
-      time:'',
-      blockno:'',
-      a:'',
-      b:'',
-      c:''
+      time: '',
+      blockno: '',
+      a: '',
+      b: '',
+      c: ''
     };
 
     this.onFilesAdded = this.onFilesAdded.bind(this);
@@ -51,76 +51,70 @@ class aUpload extends Component {
     return new Promise((resolve, reject) => {
       const req = new XMLHttpRequest();
 
-      req.upload.addEventListener("progress", event => {
+      req.upload.addEventListener('progress', event => {
         if (event.lengthComputable) {
           const copy = { ...this.state.uploadProgress };
           copy[file.name] = {
-            state: "pending",
+            state: 'pending',
             percentage: (event.loaded / event.total) * 100
           };
           this.setState({ uploadProgress: copy });
         }
       });
 
-      req.upload.addEventListener("load", event => {
+      req.upload.addEventListener('load', event => {
         const copy = { ...this.state.uploadProgress };
-        copy[file.name] = { state: "done", percentage: 100 };
+        copy[file.name] = { state: 'done', percentage: 100 };
         this.setState({ uploadProgress: copy });
         resolve(req.response);
       });
 
-      req.upload.addEventListener("error", event => {
+      req.upload.addEventListener('error', event => {
         const copy = { ...this.state.uploadProgress };
-        copy[file.name] = { state: "error", percentage: 0 };
+        copy[file.name] = { state: 'error', percentage: 0 };
         this.setState({ uploadProgress: copy });
         reject(req.response);
       });
 
       const formData = new FormData();
-      formData.append("file", file, file.name);
+      formData.append('file', file, file.name);
 
-      req.open("POST", "http://localhost:5000/upload");
+      req.open('POST', 'http://localhost:5000/upload');
       req.send(formData);
       req.onreadystatechange = function() {
         if (req.readyState == XMLHttpRequest.DONE) {
           let jsonResponse = JSON.parse(req.responseText);
-          console.log(jsonResponse.hash)
+          console.log(jsonResponse.hash);
           var Data = {
-        
-            password: 'admin',
-            method:'notarizeHash',
-            value:0,
-            args:{documentHash:jsonResponse.hash}
-          }
-          console.log(Data)
-          var user = 'admin'
-          var userAddress= '93cddaee0b3babb55dbddd923ca4048bb4a49ac2'//change address here
-          var contractName= 'ProofOfExistence'
-          var contractAddress= '2f79fd3cbeb4a2dc2d39421db934f085d65075ac'//change address here
-          
-          
-          fetch(`http://localhost/bloc/v2.2/users/${user}/${userAddress}/contract/${contractName}/${contractAddress}/call?resolve=true`,
-          {
-            method : 'POST',
-            headers : {'Content-Type': 'application/json'},
-            body : JSON.stringify(Data)
-            })
-            .then(res=> res.json())
-            .then(json=>{
-              console.log(json)
-             if(json.status=='Failure'){
-              swal({title:'Hash already exists',text:'The document already exists in the Blockchain',icon:"error"});
-             }
-             
-             if(json.status=='Success'){
-              swal({title:'Hash is added to the blockchain',icon:"success"});
-                       
-            }
-            })
+            string: jsonResponse.hash
+          };
+          console.log(Data);
 
+          fetch(`http://localhost:8000/add`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(Data)
+          })
+            .then(res => res.json())
+            .then(json => {
+              console.log(json);
+              if (json.status == 'Failure') {
+                swal({
+                  title: 'Hash already exists',
+                  text: 'The document already exists in the Blockchain',
+                  icon: 'error'
+                });
+              }
+
+              if (json.status == 'Success') {
+                swal({
+                  title: 'Hash is added to the blockchain',
+                  icon: 'success'
+                });
+              }
+            });
         }
-    }
-      
+      };
     });
   }
 
@@ -136,7 +130,7 @@ class aUpload extends Component {
             src={tick}
             style={{
               opacity:
-                uploadProgress && uploadProgress.state === "done" ? 0.5 : 0
+                uploadProgress && uploadProgress.state === 'done' ? 0.5 : 0
             }}
           />
         </div>
