@@ -116,6 +116,7 @@ app.post('/verify', async (req, res) => {
       .doesProofExist('0x' + inpHash)
       .call({ from: account })
       .then(result => {
+        console.log(result);
         if (result) {
           proofofexistence.methods
             .returnData('0x' + inpHash)
@@ -128,6 +129,13 @@ app.post('/verify', async (req, res) => {
                 blocknumber: result[1]
               });
             });
+        } else {
+          console.log('here');
+          res.status(400).send({
+            status: 'Failed',
+            timestamp: 0,
+            blocknumber: 0
+          });
         }
       });
   }
